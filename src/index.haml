@@ -1,0 +1,75 @@
+!!!
+%html(ng-app="app")
+  %head
+    %meta(charset="utf-8")
+    %script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js" type="text/javascript")
+    %script(src="http://code.jquery.com/jquery-2.1.0.js" type="text/javascript")
+    %script(src="./svg.js" type="text/javascript")
+    %script(src="./app.js" type="text/javascript")
+    %link(rel="stylesheet" href="./app.css")
+  %body(ng-controller="AppController")
+    #dpitest(style="width:1in;visible:hidden;padding:0px")
+    .devices
+      .device(ng-repeat="spec in devices" ng-click="setSpec(spec)")
+        .properties
+          %span.name(ng-bind="spec.name")
+          %span.space
+          %span(ng-bind="spec.width")
+          %span &times;
+          %span(ng-bind="spec.height")
+          %span px
+          %span.space
+          %span(ng-bind="spec.dpi")
+          %span DPI
+        .actions
+          %a.space.show(href="#" ng-click="showSpec(spec)") Show
+          %a.remove(href="#" ng-click="removeSpec(spec)") Remove
+    .inputs
+      .properties
+        %input(ng-model="specs.width" type="number" min="1" max="10000" )
+        %span &times;
+
+        %input(ng-model="specs.height" type="number" min="1" max="10000")
+        %span px
+        %span.space
+        %input(ng-model="specs.dpi" type="number" min="1" max="10000")
+        %span DPI
+      .actions
+        %input(ng-model="specs.name")
+        %a.remove(href="#" ng-click="saveSpec(specs)" ng-if="specs.name") Save
+
+    .specs
+      .vertical
+        %div
+          %span(ng-bind="result.inchWidth")
+          %span &nbsp;"
+        %div
+          %span(ng-bind="result.pxWidth")
+          %span &nbsp;px
+        %div
+          %span(ng-bind="result.dpWidth")
+          %span &nbsp;dp
+      .horizontal
+        %div
+          %span(ng-bind="result.inchHeight")
+          %span &nbsp;"
+        %div
+          %span(ng-bind="result.pxHeight")
+          %span &nbsp;px
+        %div
+          %span(ng-bind="result.dpHeight")
+          %span &nbsp;dp
+      #stage(ng-device="stage")
+      .info
+        %dl
+          %dt Size
+          %dd
+            %span(ng-bind="result.size")
+            %span &nbsp;"
+          %dt Density
+          %dd
+            %span(ng-bind="result.density")
+          %dt SW
+          %dd
+            %span(ng-bind="result.sw")
+            %span &nbsp;dp
